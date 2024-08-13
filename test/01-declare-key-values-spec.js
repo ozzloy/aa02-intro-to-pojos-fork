@@ -1,18 +1,14 @@
 const chai = require("chai");
 chai.use(require("chai-spies"));
 const expect = chai.expect;
+const fs = require('fs');
+const path = require('path');
+const babel = require('@babel/core');
 
 describe("01-declare-key-values.js", function() {
-  let consoleSpy;
-  let obj;
-  before(() => {
-    consoleSpy = chai.spy.on(console, 'log');
-    obj = require("../problems/01-declare-key-values");
-  });
-
-  after(() => {
-    chai.spy.restore(console);
-  });
+  let consoleSpy = chai.spy.on(console, 'log');
+  let filePath = path.resolve(__dirname, '../problems/01-declare-key-values.js');
+  let obj = require(filePath);
 
   it("prints 'firstValue' first", function () {
     expect(consoleSpy).on.nth(1).be.called.with('firstValue');
@@ -30,4 +26,36 @@ describe("01-declare-key-values.js", function() {
     expect(consoleSpy).on.nth(4).be.called.with({ hello: "world!" });
     expect(obj["object"]).to.eql({ hello: "world!" });
   });
+  it('uses both dot and bracket notation', function () {
+    let code = fs.readFileSync(filePath, 'utf-8');
+    let usesDotNotation = false;
+    let usesBracketNotation = false;
+
+    babel.parse(code, { sourceType: 'module' }, (error, ast) => {
+      if (error) {
+        console.error(`error parsing ${filePath}`);
+        console.error(error.message || 'Unknown error');
+        return;
+      }
+
+      babel.traverse(ast, {
+        AssignmentExpression(path) {
+          let target = path.node.left;
+          if (target.type === 'MemberExpression' &&
+              target.object.name === 'obj') {
+            if (target.computed) {
+              usesBracketNotation = true;
+            } else {
+              usesDotNotation = true;
+            }
+          }
+        }
+      });
+    });
+
+    expect(usesDotNotation, 'uses dot notation').to.be.true;
+    expect(usesBracketNotation, 'uses bracket notation').to.be.true;
+  });
+
+  chai.spy.restore(console);
 });
