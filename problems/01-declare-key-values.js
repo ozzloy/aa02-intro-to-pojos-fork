@@ -13,7 +13,7 @@ const obj = {};
 
 /******************** DO NOT MODIFY ANY CODE ABOVE THIS LINE *****************/
 
-// Your code here 
+// Your code here
 
 /******************** DO NOT MODIFY ANY CODE BELOW THIS LINE *****************/
 

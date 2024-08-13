@@ -4,7 +4,7 @@ strings. It should return true if all of the strings in the array are keys in
 the object.
 */
 
-// Your code here 
+// Your code here
 
 // let survey = {
 //   name: 'Check',

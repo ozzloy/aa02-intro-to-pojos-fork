@@ -4,7 +4,7 @@ string parameter and returns the value from the object at the key of the string
 passed in.
 */
 
-// Your code here 
+// Your code here
 
 // Example:
 // const obj = {
