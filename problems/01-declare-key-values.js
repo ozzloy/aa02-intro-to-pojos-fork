@@ -1,7 +1,12 @@
 /*
-Given the following declaration of an object, `obj` below, declare values so
-that the print statements output what is expected. Try using both dot and
-bracket notation.
+Given the empty object `obj` declared below, add properties to it so
+that the console.log statements output the expected values.
+
+Ensure that each property has the correct value type, not just a
+value that prints correctly.  For example, the boolean property
+should be set to the boolean value `false`, not the string "false".
+
+Use both dot and bracket notation to add properties.
 */
 
 const obj = {};
